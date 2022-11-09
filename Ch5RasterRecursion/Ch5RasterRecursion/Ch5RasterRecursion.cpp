@@ -1,168 +1,153 @@
 // Ch5RasterRecursion.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "RasterGrid.h"
 
 using namespace std;
 
-int getSquareSize(ifstream&);
-void getSquareInput(ifstream&, vector<vector<char>>&, int);
-void printSquare(vector<vector<char>>);
-void printTrees(vector<vector<char>>);
-void printClusters(vector<vector<char>>);
-void getClusters(vector<vector<char>>&, int, int, int);
+int getSquareRows(shared_ptr<ifstream>);
+int getSquareColumns(shared_ptr<ifstream>);
+void getSquareInput(shared_ptr<ifstream>, RasterGrid&, int, int);
+void getClusters(RasterGrid&,int, int, int);
+void traverseSquare(RasterGrid&, int, int);
 
-int main(int argc, char* args[])
+int main(int argc, char* argv[])
 {
 	if (argc == 1)
 	{
 		//default case
 		cout << "You are using the default of this program.\n";
-		ifstream inFile;
-		inFile.open("Ch5p_fa.asc");
-		int size = getSquareSize(inFile);
-		cout << size << endl;
-		size += 2;
-		vector<vector<char>> square(size);
-		getSquareInput(inFile, square, size);
-		cout << "Here is the square with a broder of grass added.\n";
-		printSquare(square);
-		cout << endl << endl;
-		cout << "Here is the tree layout of the inputted square\n";
-		printTrees(square);
-		cout << endl << endl;
-
-		//traverse through square to find clusters
-		int clusterNum = 0;
-		for (int i = 0; i < size; i++)
-		{
-			for (int j = 0; i < size; j++)
-			{
-				if (square[i][j] = 't')
-				{
-					clusterNum++;
-					getClusters(square, i, j, clusterNum);
-				}
-			}
-		}
+		shared_ptr<ifstream> inFile = make_shared<ifstream>("Ch5p_fa.asc");
+		int totalRows = getSquareRows(inFile);
+		int totalColumns = getSquareColumns(inFile);
+		RasterGrid raster(totalRows, totalColumns);
+		getSquareInput(inFile, raster, raster.storedRows, raster.storedColumns);
+		traverseSquare(raster, raster.storedRows, raster.storedColumns);
+		cout << "\nHere is the raster inputted.\n\n";
+		raster.printInGrid();
+		cout << "\nHere is the clusters of trees.\n\n";
+		raster.printOutGrid();
 	}
 	else if (argc == 2)
 	{
 		//write output to console
-		ifstream inFile;
-		inFile.open("Ch5p_fa.asc");
-		cout << getSquareSize(inFile);
+		shared_ptr<ifstream> inFile = make_shared<ifstream>(argv[1]);
+		RasterGrid raster(getSquareRows(inFile), getSquareColumns(inFile));
+		getSquareInput(inFile, raster, raster.storedRows, raster.storedColumns);
+		traverseSquare(raster, raster.storedRows, raster.storedColumns);
+		cout << "\nHere is the raster inputted.\n\n";
+		raster.printInGrid();
+		cout << "\nHere is the clusters of trees.\n\n";
+		raster.printOutGrid();
 
 	}
 	else if (argc == 3)
 	{
 		//write to output file
-		
+		shared_ptr<ifstream> inFile = make_shared<ifstream>(argv[1]);
+		RasterGrid raster(getSquareRows(inFile), getSquareColumns(inFile));
+		getSquareInput(inFile, raster, raster.storedRows, raster.storedColumns);
+		traverseSquare(raster, raster.storedRows, raster.storedColumns);
+		shared_ptr<ofstream> outFile = make_unique<ofstream>(argv[2]);
+		raster.writeOutGrid(outFile);
 	}
 	return 0;
 }
-
-int getSquareSize(ifstream& file)
+//returns number of rows in the raster in the given file
+int getSquareRows(shared_ptr<ifstream> file)
 {
 	string str{};
-	getline(file, str);
-	getline(file, str);
-	str.erase(remove(str.begin(), str.end(), ' '), str.end());
-	return str.size();
+	string rownum{};
+	char c{};
+	file->clear();
+	file->seekg(0);
+	getline(*file, str, '=');
+	getline(*file, rownum, ',');
+
+	return stoi(rownum);
 }
-
-void getSquareInput(ifstream& file, vector<vector<char>>& square, int size)
+//returns number of columns in the raster in the given file
+int getSquareColumns(shared_ptr<ifstream> file)
 {
-	file.seekg(0);
 	string str{};
-	getline(file, str);
-	square[0] = vector<char>(size);
-	generate(square[0].begin(), square[0].end(), []() {return 'g'; });
-	for (int i = 1; i < size - 1; i++)
+	string colnum{};
+	char c{};
+	file->clear();
+	file->seekg(0);
+	getline(*file, str, '=');
+	getline(*file, str, '=');
+	getline(*file, colnum, '\n');
+	return stoi(colnum);
+}
+//reads in the raster grid from the given file in to RasterGrid class
+void getSquareInput(shared_ptr<ifstream> file, RasterGrid& square, int rows, int columns)
+{
+	file->seekg(0);
+	string str{};
+	getline(*file, str);
+	for (int i = 1; i < rows - 1; i++)
 	{
-		getline(file, str);
-		str = "g " + str + " g";
+		getline(*file, str);
 		str.erase(remove(str.begin(), str.end(), ' '), str.end());
-		square[i] = vector<char>(size);
-		for (int j = 0; j < size; j++)
+
+		for (int j = 1; j < columns - 1; j++)
 		{
-			square[i][j] = str[j];
+			square.grid[i][j].indata = str[j - 1];
 		}
 	}
-	square[size - 1] = vector<char>(size);
-	generate(square[size - 1].begin(), square[size - 1].end(), []() {return 'g'; });
 
 }
-
-void printSquare(vector<vector<char>> square)
+//Recursive function for assigning clusters of trees
+void getClusters(RasterGrid& square, int row, int column, int clusterNum)
 {
-	for (vector<char> rowvec : square)
+	//sets boolean for checked to true and set the out value of the cell
+	square.grid[row][column].checked = true;
+	square.grid[row][column].setOutData(to_string(clusterNum));
+
+	//checks square behind current square
+	if ((square.grid[row][column - 1].indata == 't') && (square.grid[row][column - 1].checked == false))
 	{
-		for (char c : rowvec)
-		{
-			cout << c << ' ';
-		}
-		cout << endl;
-	}
-}
-
-void printTrees(vector<vector<char>> square)
-{
-	for (vector<char> rowvec : square)
-	{
-		for (char c : rowvec)
-		{
-			if (c == 't')
-			{
-				cout << c << ' ';
-			}
-			else
-			{
-				cout << ' ' << ' ';
-			}
-		}
-		cout << endl;
-	}
-}
-
-void printClusters(vector<vector<char>> square)
-{
-
-}
-
-void getClusters(vector<vector<char>>& square, int row, int column, int clusterNum)
-{
-	//checks squqre behind current square
-	if (square[row][column - 1] == 't')
-	{
-		column--;
-		return getClusters(square, row, column, clusterNum);
+		getClusters(square, row, column - 1, clusterNum);
 	}
 	//checks square above current square
-	else if (square[row + 1][column] == 't')
+	if ((square.grid[row - 1][column].indata == 't') && (square.grid[row - 1][column].checked == false))
 	{
-		row++;
-		return getClusters(square, row, column, clusterNum);
+		getClusters(square, row - 1, column, clusterNum);
 	}
 	//checks square in front of current square
-	else if (square[row][column + 1] == 't')
+	if ((square.grid[row][column + 1].indata == 't') && (square.grid[row][column + 1].checked == false))
 	{
-		column++;
-		return getClusters(square, row, column, clusterNum);
+		getClusters(square, row, column + 1, clusterNum);
 	}
 	//checks square below current square
-	else if (square[row - 1][column] == 't')
+	if ((square.grid[row + 1][column].indata == 't') && (square.grid[row + 1][column].checked == false))
 	{
-		row--;
-		return getClusters(square, row, column, clusterNum);
+		getClusters(square, row + 1, column, clusterNum);
 	}
 	//no squares around current square are trees
 	else
 	{
 		return;
+	}
+}
+//check each cell in the raster grid, calling getClusters for each unchecked tree found
+void traverseSquare(RasterGrid& square, int rows, int columns)
+{
+	//traverse through square to find clusters
+	int clusterNum = 0;
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < columns; j++)
+		{
+			if ((square.grid[i][j].indata == 't') && (square.grid[i][j].checked == false))
+			{
+				clusterNum++;
+				getClusters(square, i, j, clusterNum);
+			}
+		}
 	}
 }
