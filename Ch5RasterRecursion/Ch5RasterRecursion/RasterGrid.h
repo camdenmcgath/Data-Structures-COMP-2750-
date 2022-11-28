@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <functional>
 
 class RasterGrid
 {
@@ -11,10 +12,13 @@ public:
 	{
 		char indata{};
 		bool checked{};
-		const std::string getOutData() const { return outdata; }
-		void setOutData(std::string);
+		bool burnChecked{};
+		bool isBurned{};
+		const std::string getClusterData() const { return clusterdata; }
+		void setClusterData(std::string);
+		std::string burneddata{};
 	private:
-		std::string outdata = " 0 ";
+		std::string clusterdata = " 0 ";
 	};
 
 	std::vector<std::vector<Cell>> grid;
@@ -34,7 +38,8 @@ public:
 			grid[i].resize(storedColumns);
 		}
 	}
-	void printInGrid();
-	void printOutGrid();
-	void writeOutGrid(std::shared_ptr<std::ofstream>);
+	void print(std::function<void(Cell)>);
+	void writeOutputs(std::shared_ptr<std::ofstream>, 
+		std::function<std::string(Cell)>, std::function<std::string(Cell)>);
+
 };
