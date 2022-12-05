@@ -1,11 +1,11 @@
 #pragma once
-// TODO: look at auto adjusting (use queue in search to store parents and then rotate), add comments
 
 #include <functional>
 #include <iostream>
+#include <stack>
 #include <queue>
 
-
+//generic binary search tree 
 template <typename T>
 class BSTree {
 public:
@@ -14,21 +14,27 @@ public:
         BSTNode* left, * right;
         BSTNode() : left(nullptr), right(nullptr) {}
         BSTNode(const T& el, BSTNode* left = nullptr,
-                BSTNode* right = nullptr)
+            BSTNode* right = nullptr)
             : el(el), left(left), right(right) {}
     };
 
     BSTNode* root{};
+    //functions for comparisons in member functions
+    //especially useful when data used is a class
+    std::function<bool(const T& el, BSTNode*)> lessThan;
+    std::function<bool(const T& el, BSTNode*)> equalTo;
 
-    BSTree() : root(nullptr) {}
+
+    BSTree(std::function<bool(const T& el, BSTNode*)> fnLessThan, std::function<bool(const T& el, BSTNode*)> fnEqTo) 
+        : root(nullptr), lessThan(fnLessThan), equalTo(fnEqTo) {}
     ~BSTree() { clear(root); }
 
     bool isEmpty() const { return root == nullptr; }
     void clear(BSTNode*&);
     void clear() { clear(root); }
-    void print()
+    void print(std::function<void(BSTNode*&)> fn)
     {
-        traverse([](BSTNode*& node) { std::cout << node->el << " "; });
+        traverse(fn);
     }
     int size()
     {
@@ -36,9 +42,7 @@ public:
         traverse([&](BSTNode*& node) { size++; });
         return size;
     }
-    T* search(const T&);
-    void rotate(std::queue<BSTNode*>, BSTNode*);
+    BSTree<T>::BSTNode* search(const T&);
     void traverse(std::function<void(BSTNode*&)>);
     void insert(const T&);
-    void remove(BSTNode*&);
 };

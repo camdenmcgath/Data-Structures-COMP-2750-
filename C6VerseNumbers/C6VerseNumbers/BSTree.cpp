@@ -1,43 +1,32 @@
 //Sources: https://www.techiedelight.com/delete-given-binary-tree-iterative-recursive/
+//Data Structres and Algorithms in C++ A. Drozdek 4th Edition
 
 #include "BSTree.h"
 #include <iostream>
 #include <functional>
-#include <queue>
+#include <stack>
 
+//returns pointer to node if value found, 0 otherwise
 template<typename T>
-T* BSTree<T>::search(const T& el)
+typename BSTree<T>::BSTNode* BSTree<T>::search(const T& el)
 {
 	BSTNode* p = root;
-	std::queue<BSTNode*> generations;
 
 	while (p != nullptr) {
-		generations.push(p);
-		if (el == p->el) {
-			rotate(generations, p);
-			return &p->el;
+		if (equalTo(el, p)) {
+			return p;
 		}
-		else if (el < p->el) {
+		else if (lessThan(el, p)) {
 			p = p->left;
 		}
 		else {
 			p = p->right;
 		}
 	}
+	delete p;
+	return 0;
 }
-
-template<typename T>
-void BSTree<T>::rotate(std::queue<BSTNode*> prevs, BSTNode* child)
-{
-	BSTNode* parent = prevs.pop();
-	BSTNode* grandparent = prevs.pop();
-	if (grandparent != nullptr) {
-		grandparent->right = child;
-	}
-	parent->left = child->right;
-	child->right = parent;
-}
-
+//clears the entire tree
 template<typename T>
 void BSTree<T>::clear(BSTNode*& root)
 {
@@ -61,8 +50,8 @@ void BSTree<T>::clear(BSTNode*& root)
 	}
 	root = nullptr;
 }
-
-//traversal using the morris algoithm 
+//traversal using the morris algoithm
+//function parameter determines what is done each visit at a node
 template<typename T>
 void BSTree<T>::traverse(std::function<void(BSTNode*& node)> visit)
 {
@@ -89,61 +78,32 @@ void BSTree<T>::traverse(std::function<void(BSTNode*& node)> visit)
 		}
 	}
 }
-
+//basic iterative insertion
 template<typename T>
 void BSTree<T>::insert(const T& el)
 {
-	BSTNode* p = root, * prev = nullptr;
-	// find a place for inserting new node
-	while (p != nullptr) {
-		prev = p;
-		if (el < p->el) {
-			p = p->left;
+	if (search(el) == 0)
+	{
+		BSTNode* p = root, * prev = nullptr;
+		// find a place for inserting new node
+		while (p != nullptr) {
+			prev = p;
+			if (lessThan(el, p)) {
+				p = p->left;
+			}
+			else {
+				p = p->right;
+			}
+		}
+		//tree is empty
+		if (root == nullptr) {
+			root = new BSTNode(el);
+		}
+		else if (lessThan(el, prev)) {
+			prev->left = new BSTNode(el);
 		}
 		else {
-			p = p->right;
+			prev->right = new BSTNode(el);
 		}
 	}
-	//tree is empty
-	if (root == nullptr) {
-		root = new BSTNode(el);
-	}
-	else if (el < prev->el) {
-		prev->left = new BSTNode(el);
-	}
-	else {
-		prev->right = new BSTNode(el);
-	}
-}
-
-//delete alorithm implemented with copying 
-template<typename T>
-void BSTree<T>::remove(BSTNode*& node)
-{
-	BSTNode* previous, * tmp = node;
-	//node has no right child
-	if (node->right == nullptr) {
-		node = node->left;
-	}
-	//node has no left child
-	else if (node->left == nullptr) {
-		node = node->right;
-	}
-	//node has 2 children
-	else {
-		tmp = node->left;
-		previous = node;
-		while (tmp->right != nullptr) {
-			previous = tmp;
-			tmp = tmp->right;
-		}
-		node->el = tmp->el;
-		if (previous == node) {
-			previous->left = tmp->left;
-		}
-		else {
-			previous->right = tmp->left;
-		}
-	}
-	delete tmp;
 }

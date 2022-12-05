@@ -1,10 +1,4 @@
-﻿  C6VerseNumbers.cpp
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(32,1): error C2440: 'initializing': cannot convert from 'void' to 'BSTree<int>::BSTNode *'
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(32,18): message : Expressions of type void cannot be converted to other types
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(31): message : while compiling class template member function 'void BSTree<int>::rotate(std::queue<BSTree<int>::BSTNode *,std::deque<BSTree<int>::BSTNode *,std::allocator<BSTree<int>::BSTNode *>>>,BSTree<int>::BSTNode *)'
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(17): message : see reference to function template instantiation 'void BSTree<int>::rotate(std::queue<BSTree<int>::BSTNode *,std::deque<BSTree<int>::BSTNode *,std::allocator<BSTree<int>::BSTNode *>>>,BSTree<int>::BSTNode *)' being compiled
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(43): message : while compiling class template member function 'void BSTree<int>::clear(BSTree<int>::BSTNode *&)'
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.h(24): message : see reference to function template instantiation 'void BSTree<int>::clear(BSTree<int>::BSTNode *&)' being compiled
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\C6VerseNumbers.cpp(13): message : see reference to class template instantiation 'BSTree<int>' being compiled
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(33,1): error C2440: 'initializing': cannot convert from 'void' to 'BSTree<int>::BSTNode *'
-C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\C6VerseNumbers\BSTree.cpp(33,23): message : Expressions of type void cannot be converted to other types
+﻿  BSTree.cpp
+  C6VerseNumbers.cpp
+  Generating Code...
+  C6VerseNumbers.vcxproj -> C:\Users\clm29\source\repos\COMP-2750\C6VerseNumbers\x64\Debug\C6VerseNumbers.exe

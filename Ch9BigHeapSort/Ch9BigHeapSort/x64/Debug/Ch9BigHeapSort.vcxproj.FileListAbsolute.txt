@@ -1,0 +1,2 @@
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\x64\Debug\Ch9BigHeapSort.exe.lastcodeanalysissucceeded
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\x64\Debug\NativeCodeAnalysis.read.1.tlog
