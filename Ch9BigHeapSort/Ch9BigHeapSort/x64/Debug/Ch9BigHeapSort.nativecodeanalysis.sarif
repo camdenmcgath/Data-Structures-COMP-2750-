@@ -3,7 +3,64 @@
   "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
   "runs": [
     {
-      "results": [],
+      "results": [
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/clm29/source/repos/COMP-2750/Ch9BigHeapSort/Ch9BigHeapSort/Heap.cpp"
+                },
+                "region": {
+                  "startLine": 52,
+                  "startColumn": 72,
+                  "endLine": 52,
+                  "endColumn": 83
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "MinHeap<int>::heapify",
+                  "decoratedName": "?heapify@?$MinHeap@H@@UEAAXHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Users/clm29/source/repos/COMP-2750/Ch9BigHeapSort/Ch9BigHeapSort/Heap.cpp"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 70,
+                  "endLine": 33,
+                  "endColumn": 80
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "MaxHeap<int>::heapify",
+                  "decoratedName": "?heapify@?$MaxHeap@H@@UEAAXHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "tool": {
         "driver": {
           "name": "PREfast",
@@ -20,13 +77,32 @@
       "artifacts": [
         {
           "location": {
+            "uri": "file:///C:/Users/clm29/source/repos/COMP-2750/Ch9BigHeapSort/Ch9BigHeapSort/Heap.cpp"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "e8a80eadd58a955ceb8ce3d9a89541397ee5a747e838cc1538379f76c96a6740"
+          }
+        },
+        {
+          "location": {
             "uri": "file:///c:/users/clm29/source/repos/comp-2750/ch9bigheapsort/ch9bigheapsort/ch9bigheapsort.cpp"
           },
           "roles": [
             "analysisTarget"
           ],
           "hashes": {
-            "sha-256": "5d6c6e4ed842aeb1a6afdf1e8e6c454c3cf50f8edcae48941e9c483822977310"
+            "sha-256": "ce5ebdcbb2c8c15a12a92764245d052e514419e75546d3b16f3a5c7d2b408a73"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/clm29/source/repos/comp-2750/ch9bigheapsort/ch9bigheapsort/heap.h"
+          },
+          "hashes": {
+            "sha-256": "7b8bd50f1212d6a6c062a4ad2c1d940752d6ebcdc48b3a2f5d4b790e7c2bdf67"
           }
         }
       ]

@@ -1,2 +1,23 @@
 ﻿  Ch9BigHeapSort.cpp
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(17,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(15,1): message : while compiling class template member function 'void Heap<T>::heapSort(void)'
+          with
+          [
+              T=int
+          ]
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.h(22,20): message : see reference to function template instantiation 'void Heap<T>::heapSort(void)' being compiled
+          with
+          [
+              T=int
+          ]
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.h(27,1): message : see reference to class template instantiation 'Heap<T>' being compiled
+          with
+          [
+              T=int
+          ]
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Ch9BigHeapSort.cpp(20,30): message : see reference to class template instantiation 'MinHeap<int>' being compiled
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(18,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(21,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Ch9BigHeapSort.vcxproj -> C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\x64\Debug\Ch9BigHeapSort.exe
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(52): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).
+C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\Heap.cpp(33): warning C26451: Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).

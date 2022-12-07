@@ -1,1 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS />
+﻿<?xml version="1.0" encoding="utf-8"?><DEFECTS><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\</FILEPATH>
+      <FILENAME>Heap.cpp</FILENAME>
+      <LINE>52</LINE>
+      <COLUMN>80</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>MinHeap&lt;int&gt;::heapify</FUNCTION>
+    <DECORATED>?heapify@?$MinHeap@H@@UEAAXHH@Z</DECORATED>
+    <FUNCLINE>47</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT><DEFECT>
+    <SFA>
+      <FILEPATH>C:\Users\clm29\source\repos\COMP-2750\Ch9BigHeapSort\Ch9BigHeapSort\</FILEPATH>
+      <FILENAME>Heap.cpp</FILENAME>
+      <LINE>33</LINE>
+      <COLUMN>77</COLUMN>
+    </SFA>
+    <DEFECTCODE>26451</DEFECTCODE>
+    <DESCRIPTION>Arithmetic overflow: Using operator '+' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '+' to avoid overflow (io.2).</DESCRIPTION>
+    <FUNCTION>MaxHeap&lt;int&gt;::heapify</FUNCTION>
+    <DECORATED>?heapify@?$MaxHeap@H@@UEAAXHH@Z</DECORATED>
+    <FUNCLINE>28</FUNCLINE>
+    <PATH></PATH>
+  </DEFECT></DEFECTS>

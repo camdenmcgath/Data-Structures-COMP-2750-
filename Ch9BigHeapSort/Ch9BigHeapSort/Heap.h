@@ -1,14 +1,33 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <functional>
 
-//template<typename T>
+//abastract class for min/max heaps
+template<typename T>
 class Heap {
-private:
-	std::vector<int> heap{};
+protected:
+	std::vector<T> heap{};
 public:
-	Heap() = default;
-
-	[[nodiscard]] const std::vector<int>& getHeap() const noexcept { return heap; }
-	void push(const int& val) { heap.push_back(val); }
-	void insert(int idx, const int& val) noexcept { heap.at(idx) = val; }
+	Heap(std::vector<int> vec): heap(vec) {}
+	void print(std::function<void(T&)>);
+	//specific heapify function to be implemented in min/max heaps
+	virtual void heapify(int, int) = 0;
+	void heapSort();
+};
+template<typename T>
+class MaxHeap : public Heap<T> {
+public:
+	MaxHeap(std::vector<int> vec) : Heap<T>::Heap(vec) {
+		Heap<T>::heapSort();
+	}
+	virtual void heapify(int, int);
+};
+template<typename T>
+class MinHeap : public Heap<T> {
+public:
+	MinHeap(std::vector<int> vec) : Heap<T>::Heap(vec) {
+		Heap<T>::heapSort();
+	}
+	virtual void heapify(int, int);
 };
