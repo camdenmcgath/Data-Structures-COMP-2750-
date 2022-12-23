@@ -1,4 +1,5 @@
 # Data Structures
+This is a compilation of projects written for the Data Structures COMP-2750 course in FA22 semester at Northwest Nazarene University. They are all written in C++ and focus on specializing and utilizing essential data structures and algorithms.
 ## Projects
 - Chapter 3 Airline Tickets
     - Utlizes a custom made doubly linked list
