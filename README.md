@@ -12,3 +12,5 @@ This is a compilation of projects written for the Data Structures COMP-2750 cour
     - Program takes in a grid of characters 't' and 'g' (tree and grass) that emulates a raster
     - Then the recursive function identifies and lables clusters of trees in the raster
     - Uses command line arguments to specify raster input and output to console or file
+    - Identifies if a burned pixel is too small and thus a shadow
+    - Identifies if tree pixel is completely surrounded by burned pixels, and if so, changes the burn island to all burned
