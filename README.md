@@ -14,5 +14,9 @@ This is a compilation of projects written for the Data Structures COMP-2750 cour
     - Uses command line arguments to specify raster input and output to console or file
     - Identifies if a burned pixel is too small and thus a shadow
     - Identifies if tree cluster is completely surrounded by burned pixels and no grass pixels. If so, entire burned island pixels are changed to burn on output
+- Chapter 6 Verse Numbers
+    - CLI that outputs a cross reference given a text file input of a Bible verse
+    - Uses a generic Binary Search Tree to keep track of words
 - Chapter 9 Big Heap Sort
     - CLI that prints either an ascending or decending list of integers using a heap sort
+    - Uses either a max or min heap depending on CLI arguments
